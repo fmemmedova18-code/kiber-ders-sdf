@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<title>BookFace</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  color: white;
+  text-align: center;
+}
+
+.bg {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f") center/cover;
+  filter: blur(3px);
+  z-index: -1;
+}
+
+.box {
+  margin-top: 80px;
+  background: rgba(0,0,0,0.6);
+  display: inline-block;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+input, select, textarea {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  width: 220px;
+  border: none;
+  border-radius: 5px;
+}
+
+button {
+  padding: 10px 20px;
+  background: orange;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  color: white;
+}
+
+#home {
+  display: none;
+}
+
+.note {
+  background: rgba(0,0,0,0.5);
+  margin: 10px auto;
+  padding: 10px;
+  width: 60%;
+  border-radius: 8px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="bg"></div>
+
+<!-- LOGIN -->
+<div id="login" class="box">
+  <h1>📚 BookFace</h1>
+
+  <input id="email" placeholder="Email">
+  <input id="pass" type="password" placeholder="Şifrə">
+
+  <select id="book">
+    <option>Macəra</option>
+    <option>Fantastika</option>
+    <option>Detektiv</option>
+  </select>
+
+  <button onclick="enter()">Daxil ol</button>
+</div>
+
+<!-- HOME -->
+<div id="home">
+
+  <div class="box">
+    <h1>📖 Kitab Dünyası</h1>
+
+    <p id="info"></p>
+
+    <textarea id="text" placeholder="Fikrini yaz..."></textarea>
+    <button onclick="addNote()">Yaz</button>
+
+    <h3>Yazılar</h3>
+    <div id="notes"></div>
+  </div>
+
+</div>
+
+<script>
+let user = {};
+
+function enter() {
+  let email = document.getElementById("email").value;
+  let pass = document.getElementById("pass").value;
+  let book = document.getElementById("book").value;
+
+  if(email === "" || pass === "") {
+    alert("Boş buraxma!");
+    return;
+  }
+
+  user = {email, book};
+
+  document.getElementById("login").style.display = "none";
+  document.getElementById("home").style.display = "block";
+
+  document.getElementById("info").innerHTML =
+    "Email: " + email + " | Kitab: " + book;
+}
+
+function addNote() {
+  let text = document.getElementById("text").value;
+  if(text === "") return;
+
+  let div = document.createElement("div");
+  div.className = "note";
+  div.innerHTML = "<b>" + user.email + "</b><br>" + text;
+
+  document.getElementById("notes").appendChild(div);
+
+  document.getElementById("text").value = "";
+}
+</script>
+
+</body>
+</html>
